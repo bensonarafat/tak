@@ -1,0 +1,10 @@
+<svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="grommet-icons:gallery" clip-path="url(#clip0_134_15042)">
+<path id="Vector" d="M5 19.5V23.5H23V6.47H19M2 18.5L7 12.5L10 15.5L14 10.5L19 16.5M1 1.5H19V19.5H1V1.5ZM6 8.5C6.26522 8.5 6.51957 8.39464 6.70711 8.20711C6.89464 8.01957 7 7.76522 7 7.5C7 7.23478 6.89464 6.98043 6.70711 6.79289C6.51957 6.60536 6.26522 6.5 6 6.5C5.73478 6.5 5.48043 6.60536 5.29289 6.79289C5.10536 6.98043 5 7.23478 5 7.5C5 7.76522 5.10536 8.01957 5.29289 8.20711C5.48043 8.39464 5.73478 8.5 6 8.5Z" stroke="#FAFAFA" stroke-width="2"/>
+</g>
+<defs>
+<clipPath id="clip0_134_15042">
+<rect width="24" height="24" fill="white" transform="translate(0 0.5)"/>
+</clipPath>
+</defs>
+</svg>

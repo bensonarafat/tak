@@ -1,0 +1,35 @@
+<svg width="208" height="208" viewBox="0 0 208 208" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="Frame" clip-path="url(#clip0_134_15050)">
+<g id="Clip path group">
+<mask id="mask0_134_15050" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="208" height="208">
+<g id="__lottie_element_2072">
+<path id="Vector" d="M208 0H0V208H208V0Z" fill="white"/>
+</g>
+</mask>
+<g mask="url(#mask0_134_15050)">
+<g id="Group">
+<g id="Group_2" opacity="0.959367">
+<g id="Group_3">
+<path id="Vector_2" d="M104 30.6899C144.46 30.6899 177.31 63.5402 177.31 104C177.31 144.46 144.46 177.31 104 177.31C63.5402 177.31 30.69 144.46 30.69 104C30.69 63.5402 63.5402 30.6899 104 30.6899Z" stroke="#008000" stroke-width="1.26883"/>
+</g>
+</g>
+<g id="Group_4">
+<g id="Group_5">
+<path id="Vector_3" d="M103.151 36.166C141.461 36.166 171.833 66.5384 171.833 104.849C171.833 141.436 141.485 171.833 103.151 171.833C66.5391 171.833 36.1667 141.46 36.1667 104.849C36.1667 66.5144 66.5629 36.166 103.151 36.166Z" fill="#C8E6C9" stroke="#008000" stroke-width="3"/>
+</g>
+</g>
+<g id="Group_6">
+<g id="Group_7">
+<path id="Vector_4" d="M89.0015 115.191L89.9606 115.978L90.9136 115.184L136.471 77.2023L138.258 79.294L89.9797 126.825L68.276 104.361L71.6095 100.918L89.0015 115.191Z" fill="#008000" stroke="#008000" stroke-width="3"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_134_15050">
+<rect width="208" height="208" fill="white"/>
+</clipPath>
+</defs>
+</svg>
