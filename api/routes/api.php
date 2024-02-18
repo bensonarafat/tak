@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EquipmentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\HouseController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\TransactionController;
@@ -42,11 +43,19 @@ Route::group(['middleware' => 'auth:api', "prefix" => "v1"], function () {
 
     Route::group(["prefix" => "notifications"], function() {
         Route::get("", [NotificationController::class, "notification"]);
-        Route::get("read/{id}", [NotificationController::class, "read"]);
+    });
+
+    Route::group(["prefix"=> "messages"], function(){
+        Route::get("", [MessageController::class, "messages"]);
     });
 
     Route::group(["prefix" => "transactions"], function() {
-        Route::get("", [TransactionController::class, "transactions"])->withoutMiddleware("auth:api");
+        Route::get("", [TransactionController::class, "transactions"]);
+        Route::get("rents", [TransactionController::class, "rents"]);
+        Route::get("service-charge", [TransactionController::class, "serviceCharge"]);
+        Route::get("balance", [TransactionController::class, "balance"]);
+        Route::post("invoices", [TransactionController::class, "invoices"]);
+        Route::post("payments", [TransactionController::class, "payments"]);
     });
 
     Route::group(["prefix" => "services"], function(){
@@ -78,4 +87,6 @@ Route::group(['middleware' => 'auth:api', "prefix" => "v1"], function () {
     Route::group(["prefix" => "equipments"], function() {
         Route::get("{id}", [EquipmentController::class, "equipments"]);
     });
+
+
 });

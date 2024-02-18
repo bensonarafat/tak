@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:tak/core/utils/colors.dart';
 import 'package:tak/core/utils/helpers.dart';
-import 'package:tak/features/auth/domain/entities/auth_entity.dart';
 import 'package:tak/features/auth/presentation/bloc/auth/auth_bloc.dart';
 
 import '../../../../core/widgets/tak_along_loading.dart';
@@ -26,13 +25,8 @@ class LoginAccountButton extends StatelessWidget {
         if (state is ErrorAuthState) {
           toast(state.message);
         }
-        if (state is LoginState) {
-          AuthEntity authEntity = state.authEntity;
-          if (authEntity.status) {
-            context.go("/nav");
-          } else {
-            toast(authEntity.message);
-          }
+        if (state is AuthenticatedState) {
+          context.go("/nav");
         }
       },
       builder: (context, state) {

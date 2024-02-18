@@ -267,56 +267,6 @@ class _SecurityVisitorWidgetState extends State<SecurityVisitorWidget> {
                             ],
                           )
                         : Container(),
-                    visitor.checkIn != null && visitor.checkOut == null
-                        ? Row(
-                            children: [
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                    left: 8.w,
-                                    right: 8.w,
-                                    bottom: 8.h,
-                                  ),
-                                  child: TextButton(
-                                    style: ButtonStyle(
-                                      shape: MaterialStateProperty.all<
-                                          RoundedRectangleBorder>(
-                                        RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          side: BorderSide(
-                                            color: Colors.red,
-                                            width: 1.w,
-                                          ),
-                                        ),
-                                      ),
-                                      backgroundColor:
-                                          MaterialStateProperty.all<Color>(
-                                        Colors.red,
-                                      ),
-                                    ),
-                                    child: state is SecurityCheckLoadingState
-                                        ? const TakLoading()
-                                        : Text(
-                                            "Check-Out",
-                                            style: GoogleFonts.robotoFlex(
-                                              fontSize: 12.sp,
-                                              fontWeight: FontWeight.w600,
-                                              color: white,
-                                            ),
-                                          ),
-                                    onPressed: () {
-                                      context.read<SecurityBloc>().add(
-                                          CheckOutEvent(
-                                              visitorId:
-                                                  visitor.id.toString()));
-                                    },
-                                  ),
-                                ),
-                              ),
-                            ],
-                          )
-                        : Container(),
                   ],
                   onExpansionChanged: (expanded) =>
                       setState(() => _isExpanded = expanded),

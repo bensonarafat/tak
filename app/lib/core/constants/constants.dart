@@ -49,3 +49,10 @@ final List<OnBoardModel> onBoardData = [
     image: onboardingCarousel1,
   ),
 ];
+
+const List<String> imgList = [
+  'https://api.walteredmundsltd.com/images/slider1.jpg',
+  'https://api.walteredmundsltd.com/images/slider2.jpg',
+  'https://api.walteredmundsltd.com/images/slider3.jpg',
+  'https://api.walteredmundsltd.com/images/slider4.jpg',
+];

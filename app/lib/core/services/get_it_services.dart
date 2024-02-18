@@ -18,6 +18,16 @@ import 'package:tak/features/auth/domain/usecases/email.dart';
 import 'package:tak/features/auth/domain/usecases/verify_otp.dart';
 import 'package:tak/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:tak/features/messages/data/datasource/message_data_source.dart';
+import 'package:tak/features/messages/data/repositories/message_respository_impl.dart';
+import 'package:tak/features/messages/domain/respositories/message_respository.dart';
+import 'package:tak/features/messages/domain/usecases/get_messages.dart';
+import 'package:tak/features/messages/presentation/bloc/message_bloc.dart';
+import 'package:tak/features/notification/data/datasource/notification_data_source.dart';
+import 'package:tak/features/notification/data/repositories/notification_respository_impl.dart';
+import 'package:tak/features/notification/domain/respositories/notification_respository.dart';
+import 'package:tak/features/notification/domain/usecases/get_notifications.dart';
+import 'package:tak/features/notification/presentation/bloc/notification_bloc.dart';
 import 'package:tak/features/security/data/datasources/security_datasource.dart';
 import 'package:tak/features/security/data/repositories/security_repository_impl.dart';
 import 'package:tak/features/security/domain/repositories/security_repositories.dart';
@@ -40,6 +50,13 @@ import 'package:tak/features/setup/domain/usecases/account_select_usecase.dart';
 import 'package:tak/features/setup/domain/usecases/fetch_houses_usecase.dart';
 import 'package:tak/features/setup/domain/usecases/select_house_usecase.dart';
 import 'package:tak/features/setup/presentation/bloc/setup_bloc.dart';
+import 'package:tak/features/transactions/data/datasources/transaction_data_souce.dart';
+import 'package:tak/features/transactions/data/repositories/transaction_repository_impl.dart';
+import 'package:tak/features/transactions/domain/repositories/transaction_repository.dart';
+import 'package:tak/features/transactions/domain/usecases/get_balance_usecase.dart';
+import 'package:tak/features/transactions/domain/usecases/get_invoice_usecase.dart';
+import 'package:tak/features/transactions/domain/usecases/get_payment_usecase.dart';
+import 'package:tak/features/transactions/presentation/bloc/transaction_bloc.dart';
 import 'package:tak/features/visitors/data/datasources/visitor_datasource.dart';
 import 'package:tak/features/visitors/data/repositories/visitor_repository_impl.dart';
 import 'package:tak/features/visitors/domain/repositories/visitor_repository.dart';
@@ -63,6 +80,7 @@ Future<void> setupLocator() async {
       verifyOTPUserCase: getIt(),
       logoutUseCase: getIt(),
       loginUseCase: getIt(),
+      storage: getIt(),
     ),
   );
 
@@ -261,6 +279,102 @@ Future<void> setupLocator() async {
   //datasources
   getIt.registerLazySingleton<SecurityDataSource>(
     () => SecurityDataSourceImpl(
+      client: client,
+      secureStorage: getIt(),
+    ),
+  );
+
+  /**
+   * -----------------------------------------------------------------------------------------------------------
+   * Transaction
+   */
+  getIt.registerFactory<TransactionBloc>(
+    () => TransactionBloc(
+      getBalanceUseCase: getIt(),
+      getInvoicesUseCase: getIt(),
+      getPaymentsUseCase: getIt(),
+    ),
+  );
+
+  // usescases
+  getIt.registerLazySingleton<GetBalanceUseCase>(
+      () => GetBalanceUseCase(repository: getIt()));
+  getIt.registerLazySingleton<GetInvoicesUseCase>(
+      () => GetInvoicesUseCase(repository: getIt()));
+  getIt.registerLazySingleton<GetPaymentsUseCase>(
+      () => GetPaymentsUseCase(repository: getIt()));
+  // repository
+  getIt.registerLazySingleton<TransactionRepository>(
+    () => TransactionRepositoryImpl(
+      networkInfo: getIt(),
+      secureStorage: getIt(),
+      remoteDataSource: getIt(),
+    ),
+  );
+
+  //datasources
+  getIt.registerLazySingleton<TransactionDataSource>(
+    () => TransactionDataSourceImpl(
+      client: client,
+      secureStorage: getIt(),
+    ),
+  );
+
+  /**
+   * -----------------------------------------------------------------------------------------------------------
+   * Notifications
+   */
+  getIt.registerFactory<NotificationBloc>(
+    () => NotificationBloc(
+      getNotifications: getIt(),
+    ),
+  );
+
+  // usescases
+  getIt.registerLazySingleton<GetNotifications>(
+      () => GetNotifications(repository: getIt()));
+  // repository
+  getIt.registerLazySingleton<NotificationRepository>(
+    () => NotificationRepositoryImp(
+      networkInfo: getIt(),
+      secureStorage: getIt(),
+      dataSource: getIt(),
+    ),
+  );
+
+  //datasources
+  getIt.registerLazySingleton<NotificationDataSource>(
+    () => NotificationDataSourceImpl(
+      client: client,
+      secureStorage: getIt(),
+    ),
+  );
+
+  /**
+   * -----------------------------------------------------------------------------------------------------------
+   * Messages
+   */
+  getIt.registerFactory<MessageBloc>(
+    () => MessageBloc(
+      getMessages: getIt(),
+    ),
+  );
+
+  // usescases
+  getIt.registerLazySingleton<GetMessages>(
+      () => GetMessages(repository: getIt()));
+  // repository
+  getIt.registerLazySingleton<MessageRepository>(
+    () => MessageRepositoryImp(
+      networkInfo: getIt(),
+      secureStorage: getIt(),
+      dataSource: getIt(),
+    ),
+  );
+
+  //datasources
+  getIt.registerLazySingleton<MessageDataSource>(
+    () => MessageDataSourceImpl(
       client: client,
       secureStorage: getIt(),
     ),

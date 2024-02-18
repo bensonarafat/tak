@@ -34,14 +34,13 @@ class AuthRepositoryImpl implements AuthRepository {
             await remoteDataSource.createAccount(params: params);
         // if status true store Bear token
 
-        if (authModel.status) {
-          secureStorage.saveToken(authModel.token);
-          // get data and save to device
-          UserModel userModel = await userDataSource.getUserData();
-          secureStorage.saveUserData(userModel);
-        } else {
-          return Left(ServerFailure(message: 'There is a server Error!'));
-        }
+        secureStorage.saveToken(authModel.token);
+        secureStorage.saveAuth(authModel);
+
+        // get data and save to device
+        UserModel userModel = await userDataSource.getUserData();
+        secureStorage.saveUserData(userModel);
+
         return Right(authModel);
       } catch (_) {
         return Left(ServerFailure(message: 'There is a server Error!'));
@@ -93,10 +92,8 @@ class AuthRepositoryImpl implements AuthRepository {
     if (await networkInfo.isConnected) {
       try {
         LogoutModel logoutModel = await remoteDataSource.logout();
-        // remove token
-        secureStorage.deleteToken();
-        //remove user
-        secureStorage.deleteUser();
+        // clearAll
+        secureStorage.clearAll();
         return Right(logoutModel);
       } catch (_) {
         return Left(ServerFailure(message: "There is a server failure"));
@@ -113,17 +110,15 @@ class AuthRepositoryImpl implements AuthRepository {
       try {
         AuthModel authModel = await remoteDataSource.login(params: params);
         // if status true store Bear token
-        if (authModel.status) {
-          secureStorage.saveToken(authModel.token);
-          // get data and save to device
 
-          UserModel userModel = await userDataSource.getUserData();
+        secureStorage.saveToken(authModel.token);
+        secureStorage.saveAuth(authModel);
+        // get data and save to device
 
-          secureStorage.saveUserData(userModel);
-        } else {
-          return Left(
-              ServerFailure(message: "Sorry, you cant't login at the moment"));
-        }
+        UserModel userModel = await userDataSource.getUserData();
+
+        secureStorage.saveUserData(userModel);
+
         return Right(authModel);
       } catch (_) {
         return Left(ServerFailure(message: 'There is a server Error!'));

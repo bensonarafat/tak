@@ -12,6 +12,7 @@ import 'package:tak/core/services/get_it_services.dart';
 import 'package:tak/core/services/stream_listener.dart';
 import 'package:tak/features/auth/presentation/bloc/auth/auth_bloc.dart';
 import 'package:tak/features/service_request/presentation/bloc/service_request_bloc.dart';
+import 'package:tak/features/transactions/presentation/bloc/transaction_bloc.dart';
 import 'package:tak/features/visitors/presentation/bloc/visitors_bloc.dart';
 import 'package:tak/firebase_options.dart';
 
@@ -39,11 +40,12 @@ class TakEstate extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<AuthBloc>(
-          create: (_) => getIt<AuthBloc>()..add(CheckLoginEvent()),
+          create: (_) => getIt<AuthBloc>(),
         ),
         BlocProvider<VisitorsBloc>(create: (_) => getIt<VisitorsBloc>()),
         BlocProvider<ServiceRequestBloc>(
             create: (_) => getIt<ServiceRequestBloc>()),
+        BlocProvider<TransactionBloc>(create: (_) => getIt<TransactionBloc>()),
       ],
       child: AuthStreamScope(
         child: ScreenUtilInit(

@@ -11,7 +11,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tak/features/home/presentation/pages/home.dart';
 import 'package:tak/features/messages/presentation/pages/messages.dart';
-import 'package:tak/features/notification/presentation/notifications.dart';
+import 'package:tak/features/notification/presentation/pages/notifications.dart';
 import 'package:tak/features/transactions/presentation/pages/transactions.dart';
 
 List<BottomNavigationBarItem> bottomNavItems = <BottomNavigationBarItem>[

@@ -50,4 +50,8 @@ class User extends Authenticatable implements JWTSubject
     {
         return $this->hasOne(TenantHouse::class);
     }
+
+    public function tenant() {
+        return TenantHouse::where("user_id", $this->id)->first();
+    }
 }

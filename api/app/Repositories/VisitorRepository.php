@@ -12,13 +12,15 @@ class VisitorRepository implements VisitorRepositoryInterface{
     }
 
     public function visitors(int $id) {
-        return Visitor::where("user_id", $id)->latest()->get();
+        $todayStart = Carbon::today()->startOfDay();
+        $todayEnd = Carbon::today()->endOfDay();
+        return Visitor::where("user_id", $id)->orderBy("arrival", 'asc')->whereBetween('arrival', [$todayStart, $todayEnd])->latest()->get();
     }
 
     public function security(){
         $todayStart = Carbon::today()->startOfDay();
         $todayEnd = Carbon::today()->endOfDay();
-        return Visitor::orderBy("arrival", 'desc')->whereBetween('arrival', [$todayStart, $todayEnd])->latest()->get();
+        return Visitor::orderBy("arrival", 'asc')->with(["user.tenant_house.house"])->whereBetween('arrival', [$todayStart, $todayEnd])->latest()->get();
     }
 
     public function create(array $data) : Visitor

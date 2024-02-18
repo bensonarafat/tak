@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:tak/core/constants/assets.dart';
+import 'package:tak/core/utils/extensions.dart';
+import 'package:tak/core/utils/helpers.dart';
+import 'package:tak/features/transactions/domain/entities/invoice_entity.dart';
 
 class TransactionWidgetDebit extends StatelessWidget {
-  final String status;
+  final InvoiceEntity invoice;
   const TransactionWidgetDebit({
     super.key,
-    required this.status,
+    required this.invoice,
   });
 
   @override
@@ -15,6 +18,7 @@ class TransactionWidgetDebit extends StatelessWidget {
     return Container(
       width: 358.w,
       padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+      margin: EdgeInsets.only(bottom: 8.h),
       decoration: BoxDecoration(
         color: const Color(0x19DADADA),
         borderRadius: BorderRadius.circular(4.r),
@@ -44,7 +48,7 @@ class TransactionWidgetDebit extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: Text(
-                            status,
+                            invoice.type.inCaps,
                             style:
                                 Theme.of(context).textTheme.bodySmall!.copyWith(
                                       fontWeight: FontWeight.w500,
@@ -55,7 +59,7 @@ class TransactionWidgetDebit extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: Text(
-                            'Today at 02:45 pm',
+                            convertDateToAgo(invoice.createdAt),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
@@ -74,7 +78,7 @@ class TransactionWidgetDebit extends StatelessWidget {
                   Expanded(
                     child: SizedBox(
                       child: Text(
-                        '₦2,000,000.00',
+                        '₦${invoice.amount}',
                         textAlign: TextAlign.right,
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(
                               fontSize: 14.sp,

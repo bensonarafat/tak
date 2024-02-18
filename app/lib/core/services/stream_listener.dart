@@ -17,18 +17,14 @@ class AuthStreamScope extends InheritedNotifier<GoRouterRefereshStream> {
 
 class GoRouterRefereshStream extends ChangeNotifier {
   late final StreamSubscription<dynamic> subscription;
+
   GoRouterRefereshStream(Stream<dynamic> stream) {
     notifyListeners();
     subscription = stream.asBroadcastStream().listen(
           (event) => notifyListeners(),
         );
   }
-
-  void checkAuth() {
-    getIt.get<AuthBloc>().add(CheckLoginEvent());
-  }
-
-  bool isSignedIn() => getIt.get<AuthBloc>().state.isLogin;
+  bool isSignedIn() => getIt.get<AuthBloc>().state is AuthenticatedState;
 
   @override
   void dispose() {

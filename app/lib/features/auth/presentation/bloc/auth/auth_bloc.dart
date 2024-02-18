@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:tak/core/services/secure_storage.dart';
 import 'package:tak/core/utils/helpers.dart';
+import 'package:tak/features/auth/data/models/auth_model.dart';
 import 'package:tak/features/auth/domain/entities/auth_entity.dart';
 import 'package:tak/features/auth/domain/entities/otp_entity.dart';
 import 'package:tak/features/auth/domain/entities/email_entity.dart';
@@ -16,21 +19,20 @@ part 'auth_event.dart';
 part 'auth_state.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  final storage = const FlutterSecureStorage();
-
   final CreateAccountUserCase createAccountUserCase;
   final EmailUseCase emailUseCase;
   final VerifyOTPUserCase verifyOTPUserCase;
   final LoginUseCase loginUseCase;
   final LogoutUseCase logoutUseCase;
-
+  final SecureStorage storage;
   AuthBloc({
     required this.createAccountUserCase,
     required this.emailUseCase,
     required this.verifyOTPUserCase,
     required this.logoutUseCase,
     required this.loginUseCase,
-  }) : super(const AuthInitial()) {
+    required this.storage,
+  }) : super(AuthInitial()) {
     on<CheckLoginEvent>((event, emit) => checkLoginEvent(event, emit));
     on<LogoutEvent>((event, emit) => logoutEvent(event, emit));
     on<EmailEvent>((event, emit) => emailEvent(event, emit));
@@ -40,7 +42,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   loginEvent(event, emit) async {
-    emit(const AuthLoadingState());
+    emit(AuthLoadingState());
     final failureOrCreateAccount = await loginUseCase(
       LoginParams(
         email: event.email,
@@ -53,7 +55,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   createAccountEvent(event, emit) async {
-    emit(const AuthLoadingState());
+    emit(AuthLoadingState());
     final failureOrCreateAccount = await createAccountUserCase(
       CreateAccountParams(
         fullname: event.fullname,
@@ -67,7 +69,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   verifyOTPEvent(event, emit) async {
-    emit(const AuthLoadingState());
+    emit(AuthLoadingState());
     final failureOrVerifyOtp = await verifyOTPUserCase(VerifyOTPParams(
       otp: event.otp,
       email: event.email,
@@ -78,7 +80,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   emailEvent(event, emit) async {
-    emit(const AuthLoadingState());
+    emit(AuthLoadingState());
     final failureOrEmailEvent = await emailUseCase(
       EmailParams(
         email: event.email,
@@ -91,20 +93,31 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   logoutEvent(event, emit) async {
-    emit(const AuthLoadingState());
+    emit(AuthLoadingState());
     final failureOrLogout = await logoutUseCase(LogoutParams());
     emit(failureOrLogout.fold(
         (failure) => ErrorAuthState(message: mapFailureToMessage(failure)),
-        (r) => const AuthenticatedState(false)));
+        (r) => UnAuthenticatedState()));
   }
 
   checkLoginEvent(event, emit) async {
-    bool isLogin = await isLoggedIn();
-    emit(AuthenticatedState(isLogin));
+    bool isLogin = await _isLoggedIn();
+    if (isLogin) {
+      emit(AuthenticatedState());
+    } else {
+      emit(UnAuthenticatedState());
+    }
   }
 
-  Future<bool> isLoggedIn() async {
-    String? authToken = await storage.read(key: 'jwt');
-    return authToken != null && authToken.isNotEmpty;
+  Future<bool> _isLoggedIn() async {
+    bool isTokenSaved = await storage.isTokenSave();
+    AuthModel? auth = await storage.getAuthData();
+    if (auth == null) return false;
+
+    if (!isTokenSaved ||
+        auth.expiresIn > DateTime.now().millisecondsSinceEpoch) {
+      return false;
+    }
+    return true;
   }
 }

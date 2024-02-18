@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:tak/core/utils/colors.dart';
 import 'package:tak/core/utils/helpers.dart';
 import 'package:tak/core/widgets/tak_along_loading.dart';
-import 'package:tak/features/auth/domain/entities/auth_entity.dart';
 import 'package:tak/features/auth/presentation/bloc/auth/auth_bloc.dart';
 
 class CreateAccountButton extends StatelessWidget {
@@ -86,13 +85,9 @@ class CreateAccountButton extends StatelessWidget {
           toast(message);
         }
         if (state is CreateAccountState) {
-          AuthEntity authEntity = state.authEntity;
-          if (authEntity.status) {
-            // navigate to the
-            context.go("/verify-otp", extra: email);
-          } else {
-            toast(authEntity.message);
-          }
+          // AuthEntity authEntity = state.authEntity;
+          // navigate to the
+          context.go("/verify-otp", extra: email);
         }
       },
     );

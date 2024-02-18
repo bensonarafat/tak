@@ -2,23 +2,13 @@
 namespace App\Repositories;
 
 use App\Models\Notifications;
-use App\Interfaces\NotificationRespositoryInterface;
+use App\Interfaces\NotificationRepositoryInterface;
 
-class NotificationRespository implements NotificationRespositoryInterface{
+class NotificationRepository implements NotificationRepositoryInterface{
 
-    public function findByUser(int $id) : Notifications
+    public function all()
     {
-        return Notifications::where("user_id", $id)->latest()->get();
-    }
-
-    public function create(array $data) : Notifications
-    {
-        return Notifications::create($data);
-    }
-
-    public function update(int $id, array $data) : void
-    {
-        Notifications::whereId($id)->update($data);
+        return Notifications::latest()->get();
     }
 }
 ?>

@@ -1,7 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:tak/core/utils/helpers.dart';
+import 'package:tak/core/constants/constants.dart';
 
 class CarouselWidget extends StatefulWidget {
   const CarouselWidget({super.key});
@@ -28,6 +28,11 @@ class _CarouselWidgetState extends State<CarouselWidget> {
             'Make service request right from your home and receive up service from us';
       }
       if (imgList.indexOf(item) == 2) {
+        heading = 'Visitors Tracking';
+        subheading =
+            'Expecting new visitors, you can submit that right here without calling the front gate';
+      }
+      if (imgList.indexOf(item) == 3) {
         heading = 'Visitors Tracking';
         subheading =
             'Expecting new visitors, you can submit that right here without calling the front gate';

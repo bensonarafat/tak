@@ -14,12 +14,14 @@ use App\Repositories\EquipmentRepository;
 use App\Interfaces\UserRepositoryInterface;
 use App\Repositories\TransactionRepository;
 use App\Interfaces\HouseRepositoryInterface;
-use App\Repositories\NotificationRespository;
+use App\Repositories\NotificationRepository;
 use App\Interfaces\ServiceRepositoryInterface;
 use App\Interfaces\VisitorRepositoryInterface;
 use App\Interfaces\EquipmentRepositoryInterface;
+use App\Interfaces\MessageRepositoryInterface;
 use App\Interfaces\TransactionRepositoryInterface;
-use App\Interfaces\NotificationRespositoryInterface;
+use App\Interfaces\NotificationRepositoryInterface;
+use App\Repositories\MessageRepository;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -33,7 +35,8 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(EquipmentRepositoryInterface::class, EquipmentRepository::class);
         $this->app->bind(HouseRepositoryInterface::class, HouseRepository::class);
         $this->app->bind(VisitorRepositoryInterface::class, VisitorRepository::class);
-        $this->app->bind(NotificationRespositoryInterface::class, NotificationRespository::class);
+        $this->app->bind(NotificationRepositoryInterface::class, NotificationRepository::class);
+        $this->app->bind(MessageRepositoryInterface::class, MessageRepository::class);
         $this->app->bind(TransactionRepositoryInterface::class, TransactionRepository::class);
         $this->app->bind(AuthMailInterface::class, AuthMail::class);
         $this->app->singleton(OTPService::class, function ($app) {

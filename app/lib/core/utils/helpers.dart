@@ -82,9 +82,3 @@ String convertDateToAgo(String dateString) {
     return 'just now';
   }
 }
-
-final List<String> imgList = [
-  'https://api.walteredmundsltd.com/images/slider1.jpg',
-  'https://api.walteredmundsltd.com/images/slider2.jpg',
-  'https://api.walteredmundsltd.com/images/slider3.jpg',
-];

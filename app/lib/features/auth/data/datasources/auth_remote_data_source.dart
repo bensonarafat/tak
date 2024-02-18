@@ -44,7 +44,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
 
-      return AuthModel.fromJson(data);
+      return AuthModel.fromJson(data['data']);
     } else {
       throw ServerException();
     }
@@ -129,7 +129,7 @@ class AuthRemoteDataSourceImpl implements AuthRemoteDataSource {
     if (response.statusCode == 200) {
       var data = json.decode(response.body);
 
-      return AuthModel.fromJson(data);
+      return AuthModel.fromJson(data['data']);
     } else {
       throw ServerException();
     }

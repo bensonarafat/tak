@@ -16,9 +16,11 @@ import 'package:tak/core/widgets/tak_cache_network_image.dart';
 import 'package:tak/features/home/presentation/widgets/carousel_widget.dart';
 import 'package:tak/features/home/presentation/widgets/house_banner_widget.dart';
 import 'package:tak/features/home/presentation/widgets/service_request_widget.dart';
-import 'package:tak/features/home/presentation/widgets/tranaction_widget.dart';
 import 'package:tak/features/home/presentation/widgets/visitors_widget.dart';
 import 'package:tak/features/service_request/presentation/bloc/service_request_bloc.dart';
+import 'package:tak/features/transactions/presentation/bloc/transaction_bloc.dart';
+import 'package:tak/features/transactions/presentation/widgets/rent_balance_widget.dart';
+import 'package:tak/features/transactions/presentation/widgets/service_balance_widget.dart';
 import 'package:tak/features/visitors/presentation/bloc/visitors_bloc.dart';
 
 class Home extends StatefulWidget {
@@ -40,6 +42,8 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     _getUserData();
+
+    context.read<TransactionBloc>().add(BalanceTransactionFetch());
   }
 
   _getUserData() async {
@@ -103,21 +107,12 @@ class _HomeState extends State<Home> {
                     fontWeight: FontWeight.w400,
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      role,
-                      style: GoogleFonts.robotoFlex(
-                        fontSize: 10.sp,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    const Icon(
-                      Icons.arrow_drop_down_sharp,
-                    )
-                  ],
+                Text(
+                  role,
+                  style: GoogleFonts.robotoFlex(
+                    fontSize: 10.sp,
+                    fontWeight: FontWeight.w400,
+                  ),
                 ),
               ],
             ),
@@ -155,37 +150,15 @@ class _HomeState extends State<Home> {
                 Gap(16.h),
                 HouseBannerWidget(tenantHouseEntity: tenantHouseEntity),
                 Gap(16.h),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        "Invoices and Payments",
-                        style:
-                            Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                      ),
-                    ),
-                    Expanded(
-                      child: GestureDetector(
-                        onTap: () => context.push('/transactions'),
-                        child: Text(
-                          "See more",
-                          textAlign: TextAlign.end,
-                          style: GoogleFonts.robotoFlex(
-                            color: primaryColor,
-                            fontSize: 12.sp,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                    Gap(16.h),
-                  ],
+                GestureDetector(
+                  onTap: () => context.push('/transactions'),
+                  child: const RentBalanceWidget(),
                 ),
                 Gap(16.h),
-                const TransactionWidget(),
+                GestureDetector(
+                  onTap: () => context.push('/transactions'),
+                  child: const ServiceBalanceWidget(),
+                ),
                 Gap(16.h),
                 Row(
                   children: [

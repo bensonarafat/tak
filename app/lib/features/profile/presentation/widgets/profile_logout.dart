@@ -17,10 +17,8 @@ class ProfileLogout extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthenticatedState) {
-          if (!state.isLogin) {
-            context.go("/getstarted");
-          }
+        if (state is UnAuthenticatedState) {
+          context.go("/getstarted");
         }
         //error
         if (state is ErrorAuthState) {
